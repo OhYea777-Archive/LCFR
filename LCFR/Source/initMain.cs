@@ -11,7 +11,7 @@ using GTA;
 namespace LCFR
 {
     public class initMain : Script
-    {// test
+    {
         public initMain()
         {
             LCFREngine.Utils.drawString("Welcome to Liberty City First Responder!");

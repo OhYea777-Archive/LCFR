@@ -57,7 +57,7 @@ namespace Engine
             Game.FadeScreenIn(10000);
             Game.LocalPlayer.Model = currentModel;
             LCFREngine.Utils.drawString("No longer on duty fuckers!!!");
-        }// testr
+        }
 
     }
 }
