@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 
 using Engine;
 using GTA;
@@ -14,7 +15,11 @@ namespace LCFR
     {
         public initMain()
         {
-            LCFREngine.Utils.drawString("Welcome to Liberty City First Responder!");
+            //LCFREngine.Utils.drawString("Welcome to Liberty City First Responder!");
+
+            LCFREngine.Utils.drawTopLeftString("Welcome to Liberty City First Responder!\nVersion 0.1\n\nPress");
+            LCFREngine.Utils.drawCenterBottomString("Debug message");
+
             // don't need to call anything here
             // we may call a messagebox or something here to display a welcome message or
             // just call that in the Engine.cs file

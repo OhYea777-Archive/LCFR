@@ -13,10 +13,22 @@ namespace Engine
 
         private LCFREngine engine;
 
-        public const int DUTY_TIMEOUT = 60;
+        public const int DUTY_TIMEOUT = 10; // 300 5 mins
 
         public double endDutyTime = -1;
         public bool bIsOnDuty = false;
+
+        Vector3 vehicle1 = new Vector3(1043.25f, -795.979f, 3.1011f);
+        Vector3 vehicle2 = new Vector3(1045.76f, -795.526f, 3.06828f);
+        Vector3 vehicle3 = new Vector3(1048.27f, -795.073f, 3.04196f);
+        Vector3 vehicle4 = new Vector3(1050.77f, -794.604f, 3.02422f);
+        Vector3 vehicle5 = new Vector3(1053.27f, -794.135f, 3.01323f);
+        Vector3 vehicle6 = new Vector3(1055.77f, -793.667f, 3.01755f);
+        Vector3 vehicle7 = new Vector3(1069.22f, -784.487f, 3.82037f);
+        Vector3 vehicle8 = new Vector3(1077.84f, -768.706f, 5.00823f);
+
+        Vector3 onDutySpawn = new Vector3(1046.2f, -780.282f, 4.40463f);
+        Vector3 offDutySpawn = new Vector3(921.073f, -577.344f, 14.1366f);
 
         public Model currentModel;
 
@@ -31,33 +43,65 @@ namespace Engine
             {
                 this.currentModel = Game.LocalPlayer.Model;
                 bIsOnDuty = true;
-
                 Game.LocalPlayer.WantedLevel = 0;
                 Game.WantedMultiplier = 0.0F;
                 Game.LocalPlayer.Money += 10000;
-                // Game.LocalPlayer.Character.Model = Game.AllowEmergencyServices
                 Game.FadeScreenOut(5000, true);
                 Game.FadeScreenIn(10000);
                 Game.LocalPlayer.Model = Model.BasicCopModel;
                 Game.LocalPlayer.Character.RandomizeOutfit();
 
-                LCFREngine.Utils.drawString("On duty fuckers!!!");
+                Game.LocalPlayer.Character.Position = onDutySpawn;
+                World.CreateVehicle(new Model("POLICE"), vehicle1);
+                World.CreateVehicle(new Model("POLICE2"), vehicle2);
+                World.CreateVehicle(new Model("POLPATRIOT"), vehicle3);
+                World.CreateVehicle(new Model("NSTOCKADE"), vehicle4);
+                World.CreateVehicle(new Model("FBI"), vehicle5);
+                World.CreateVehicle(new Model("NOOSE"), vehicle6);
+                World.CreateVehicle(new Model("POLMAV"), vehicle7);
+                World.CreateVehicle(new Model("ANNIHILATOR"), vehicle8);
+
+                LCFREngine.Utils.drawTopLeftString("on duty message");
             }
             else
-                LCFREngine.Utils.drawString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime))) + "s");
+                LCFREngine.Utils.drawTopLeftString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime))) + "s");
         }
 
         public void endDuty()
         {
+            // in order to disable the "no police" you must disable that in the trainer
             endDutyTime = TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
+
+            // delete all vehicles in area (police)
+            foreach (Vehicle veh in World.GetVehicles(Game.LocalPlayer.Character.Position, 75.0f))
+                if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
+                    veh.Delete();
+
             bIsOnDuty = false;
             Game.WantedMultiplier = 1.0F;
             Game.LocalPlayer.Money -= 10000;
             Game.FadeScreenOut(5000, true);
             Game.FadeScreenIn(10000);
-            Game.LocalPlayer.Model = currentModel;
-            LCFREngine.Utils.drawString("No longer on duty fuckers!!!");
-        }
+            Game.LocalPlayer.Model = Model.FromString("PLAYER");
 
+            Game.LocalPlayer.Character.Position = offDutySpawn;
+
+            LCFREngine.Utils.drawTopLeftString("off duty message");
+        }
+    }
+
+    public class SpeedOMeter : Script
+    {
+        public SpeedOMeter()
+        {
+            this.PerFrameDrawing += new GTA.GraphicsEventHandler(speedometer);
+        }
+        public void speedometer(object sender, GTA.GraphicsEventArgs e)
+        {
+            if (Player.Character.isInVehicle())
+            {
+                e.Graphics.DrawText(System.Math.Floor(Player.Character.CurrentVehicle.Speed * 2.2369).ToString() + " /mph", 0.9f, 0.1f);
+            }
+        }
     }
 }
