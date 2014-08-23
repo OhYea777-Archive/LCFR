@@ -14,7 +14,7 @@ namespace LCFR
     {
         public initMain()
         {
-            Utils.drawString("Welcome to Liberty City First Responder!");
+            LCFREngine.Utils.drawString("Welcome to Liberty City First Responder!");
             // don't need to call anything here
             // we may call a messagebox or something here to display a welcome message or
             // just call that in the Engine.cs file

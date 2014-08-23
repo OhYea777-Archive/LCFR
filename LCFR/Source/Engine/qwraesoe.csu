@@ -35,12 +35,10 @@ namespace Engine
                 Game.LocalPlayer.WantedLevel = 0;
                 Game.WantedMultiplier = 0.0F;
                 Game.LocalPlayer.Money += 10000;
+                Game.LocalPlayer.Model = Model.BasicCopModel;
                 // Game.LocalPlayer.Character.Model = Game.AllowEmergencyServices
                 Game.FadeScreenOut(5000, true);
                 Game.FadeScreenIn(10000);
-                Game.LocalPlayer.Model = Model.BasicCopModel;
-                Game.LocalPlayer.Character.RandomizeOutfit();
-
                 LCFREngine.Utils.drawString("On duty fuckers!!!");
             }
             else

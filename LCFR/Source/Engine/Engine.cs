@@ -9,65 +9,85 @@ using GTA;
 
 namespace Engine
 {
-    /// <summary>
-    /// Ped spawning/controller
-    /// </summary>
-    class Peds : Script
-    {
-        GTA.Ped ped;
-        class Ped_Spawn
-        {
-            private static void spawnPed(int type, String[] pedList, int gender)
-            {
-               // ped = GTA.World.CreatePed(GTA.Vector3.Zero);
-            }
-        }
-    }
 
-    /// <summary>
-    /// Handler for all key press
-    /// </summary>
-    class KeyHandler : Script
+    public class LCFREngine : Script
     {
-        public KeyHandler()
-        {
-            this.KeyDown += new GTA.KeyEventHandler(KeyPressDown);
-        }
-        
-        // check if player is onDuty
-        public static bool bOnDuty = false;
 
-        public static void KeyPressDown(object sender, GTA.KeyEventArgs e)
+        private Duty duty;
+        private KeyHandler keyHandler;
+
+        public LCFREngine()
         {
-            if (!bOnDuty)
+            this.duty = new Duty(this);
+            this.keyHandler = new KeyHandler(this);
+        }
+
+        public Duty getDuty()
+        {
+            return duty;
+        }
+
+        public KeyHandler getKeyHandler()
+        {
+            return keyHandler;
+        }
+
+        /// <summary>
+        /// Ped spawning/controller
+        /// </summary>
+        public class Peds : Script
+        {
+            GTA.Ped ped;
+            class Ped_Spawn
             {
-                if ((e.Key == Keys.Alt & Keys.D))// ((e.Key == Keys.Alt & e.Key == Keys.D)) // && !bOnDuty)
+                private static void spawnPed(int type, String[] pedList, int gender)
                 {
-                    bOnDuty = true;
-                    Utils.drawString("bOnDuty == true");
+                    // ped = GTA.World.CreatePed(GTA.Vector3.Zero);
                 }
             }
-            else if (bOnDuty)
-            {
+        }
 
+        /// <summary>
+        /// Handler for all key press
+        /// </summary>
+        public class KeyHandler
+        {
+
+            private LCFREngine engine;
+
+            public KeyHandler(LCFREngine engine)
+            {
+                this.engine = engine;
+                this.engine.BindKey(Keys.D, false, false, true, new KeyPressDelegate(dutyKey));
+            }
+
+            public void dutyKey()
+            {
+                if (!engine.getDuty().bIsOnDuty)
+                    engine.getDuty().beginDuty();
+                else
+                    engine.getDuty().endDuty();
+            }
+
+        }
+
+        /// <summary>
+        /// Utilities class for calling random functions
+        /// </summary>
+        public class Utils : Script
+        {
+            public static void drawRect(int x, int y, string text, Color backgroundColor, Color textColor, GraphicsEventArgs e)
+            {
+                e.Graphics.DrawRectangle((int) (x + text.Length * 5.7), y + 12, (int) text.Length * 12, 25, backgroundColor);
+                e.Graphics.DrawText(text, x, y, textColor);
+            }
+
+            public static void drawString(string text)
+            {
+                Game.DisplayText(text);
             }
         }
+
     }
 
-    /// <summary>
-    /// Utilities class for calling random functions
-    /// </summary>
-    class Utils : Script
-    {
-        public static void drawBox(int x, int y, string text, Color color, GraphicsEventArgs e)
-        {
-            // e.Graphics.DrawRectangle((int)(x + text.Length) )
-        }
-
-
-        public static void drawString(string message)
-        {
-            Game.DisplayText(message);
-        }
-    }
 }
