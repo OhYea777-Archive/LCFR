@@ -19,6 +19,8 @@ namespace Engine
         public double endDutyTime = -1;
         public bool bIsOnDuty = false;
 
+        public List<Vehicle> spawnedVehicles = new List<Vehicle>();
+
         Vector3 vehicle1 = new Vector3(1043.25f, -795.979f, 3.1011f);
         Vector3 vehicle2 = new Vector3(1045.76f, -795.526f, 3.06828f);
         Vector3 vehicle3 = new Vector3(1048.27f, -795.073f, 3.04196f);
@@ -36,6 +38,8 @@ namespace Engine
         public Duty(LCFREngine engine)
         {
             this.engine = engine;
+
+            this.engine.Tick += Tick;
         }
 
         public void beginDuty()
@@ -54,14 +58,15 @@ namespace Engine
                 engine.WrappedPlayer.Character.RandomizeOutfit();
 
                 engine.WrappedPlayer.Character.Position = onDutySpawn;
-                World.CreateVehicle(new Model("POLICE"), vehicle1);
-                World.CreateVehicle(new Model("POLICE2"), vehicle2);
-                World.CreateVehicle(new Model("POLPATRIOT"), vehicle3);
-                World.CreateVehicle(new Model("NSTOCKADE"), vehicle4);
-                World.CreateVehicle(new Model("FBI"), vehicle5);
-                World.CreateVehicle(new Model("NOOSE"), vehicle6);
-                World.CreateVehicle(new Model("POLMAV"), vehicle7);
-                World.CreateVehicle(new Model("ANNIHILATOR"), vehicle8);
+
+                spawnedVehicles.Add(World.CreateVehicle(new Model("POLICE"), vehicle1));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("POLICE2"), vehicle2));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("POLPATRIOT"), vehicle3));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("NSTOCKADE"), vehicle4));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("FBI"), vehicle5));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("NOOSE"), vehicle6));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("POLMAV"), vehicle7));
+                spawnedVehicles.Add(World.CreateVehicle(new Model("ANNIHILATOR"), vehicle8));
 
                 Utils.drawTopLeftString("on duty message");
             }
@@ -75,7 +80,7 @@ namespace Engine
             endDutyTime = TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
 
             // delete all vehicles in area (police)
-            foreach (Vehicle veh in World.GetVehicles(Game.LocalPlayer.Character.Position, 75.0f))
+            foreach (Vehicle veh in spawnedVehicles)
                 if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
                     veh.Delete();
 
@@ -89,6 +94,19 @@ namespace Engine
             engine.WrappedPlayer.Character.Position = offDutySpawn;
 
             Utils.drawTopLeftString("off duty message");
+        }
+
+        public void Tick(System.Object sender, EventArgs e)
+        {
+            if (bIsOnDuty && engine.WrappedPlayer.Character.isInVehicle())
+                for (int index = 0; index < spawnedVehicles.Count; index++)
+                {
+                    Vehicle veh = spawnedVehicles.ToArray()[index];
+                    spawnedVehicles.RemoveAt(index);
+
+                    if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
+                        veh.Delete();
+                }
         }
 
     }

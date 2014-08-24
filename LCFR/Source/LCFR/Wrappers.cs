@@ -52,7 +52,7 @@ namespace LCFR
         {
             get
             {
-                return new WrappedPed(player.Character).Ped;
+                return player.Character;
             }
 
             private set { }
@@ -843,6 +843,36 @@ namespace LCFR
         public Blip AttachBlip()
         {
             return ped.AttachBlip();
+        }
+
+        public void AttachTo(Vehicle vehicle, Vector3 offset)
+        {
+            ped.AttachTo(vehicle, offset);
+        }
+
+        public void BecomeMissionCharacter()
+        {
+            ped.BecomeMissionCharacter();
+        }
+
+        public void CancelAmbientSpeech()
+        {
+            ped.CancelAmbientSpeech();
+        }
+
+        public void CantBeDamagedByRelationshipGroup(RelationshipGroup group, bool value)
+        {
+            ped.CantBeDamagedByRelationshipGroup(group, value);
+        }
+
+        public void ChangeRelationship(RelationshipGroup group, Relationship level)
+        {
+            ped.ChangeRelationship(group, level);
+        }
+
+        public void Delete()
+        {
+            ped.Delete();
         }
 
     }
