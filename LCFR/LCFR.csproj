@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Source\Engine\Duty.cs" />
     <Compile Include="Source\Engine\Engine.cs" />
+    <Compile Include="Source\LCFR\PlayerVehicle.cs" />
+    <Compile Include="Source\LCFR\Wrappers.cs" />
     <Compile Include="Source\initMain.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

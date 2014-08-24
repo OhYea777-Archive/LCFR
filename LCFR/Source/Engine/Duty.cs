@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using LCFR;
 using GTA;
 
 namespace Engine
@@ -43,15 +44,16 @@ namespace Engine
             {
                 this.currentModel = Game.LocalPlayer.Model;
                 bIsOnDuty = true;
-                Game.LocalPlayer.WantedLevel = 0;
+
+                engine.WrappedPlayer.WantedLevel = 0;
                 Game.WantedMultiplier = 0.0F;
-                Game.LocalPlayer.Money += 10000;
+                engine.WrappedPlayer.Money += 10000;
                 Game.FadeScreenOut(5000, true);
                 Game.FadeScreenIn(10000);
-                Game.LocalPlayer.Model = Model.BasicCopModel;
-                Game.LocalPlayer.Character.RandomizeOutfit();
+                engine.WrappedPlayer.Model = Model.BasicCopModel;
+                engine.WrappedPlayer.Character.RandomizeOutfit();
 
-                Game.LocalPlayer.Character.Position = onDutySpawn;
+                engine.WrappedPlayer.Character.Position = onDutySpawn;
                 World.CreateVehicle(new Model("POLICE"), vehicle1);
                 World.CreateVehicle(new Model("POLICE2"), vehicle2);
                 World.CreateVehicle(new Model("POLPATRIOT"), vehicle3);
@@ -61,10 +63,10 @@ namespace Engine
                 World.CreateVehicle(new Model("POLMAV"), vehicle7);
                 World.CreateVehicle(new Model("ANNIHILATOR"), vehicle8);
 
-                LCFREngine.Utils.drawTopLeftString("on duty message");
+                Utils.drawTopLeftString("on duty message");
             }
             else
-                LCFREngine.Utils.drawTopLeftString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime))) + "s");
+                Utils.drawTopLeftString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime))) + "s");
         }
 
         public void endDuty()
@@ -79,29 +81,16 @@ namespace Engine
 
             bIsOnDuty = false;
             Game.WantedMultiplier = 1.0F;
-            Game.LocalPlayer.Money -= 10000;
+            engine.WrappedPlayer.Money -= 10000;
             Game.FadeScreenOut(5000, true);
             Game.FadeScreenIn(10000);
-            Game.LocalPlayer.Model = Model.FromString("PLAYER");
+            engine.WrappedPlayer.Model = Model.FromString("PLAYER");
 
-            Game.LocalPlayer.Character.Position = offDutySpawn;
+            engine.WrappedPlayer.Character.Position = offDutySpawn;
 
-            LCFREngine.Utils.drawTopLeftString("off duty message");
+            Utils.drawTopLeftString("off duty message");
         }
+
     }
 
-    public class SpeedOMeter : Script
-    {
-        public SpeedOMeter()
-        {
-            this.PerFrameDrawing += new GTA.GraphicsEventHandler(speedometer);
-        }
-        public void speedometer(object sender, GTA.GraphicsEventArgs e)
-        {
-            if (Player.Character.isInVehicle())
-            {
-                e.Graphics.DrawText(System.Math.Floor(Player.Character.CurrentVehicle.Speed * 2.2369).ToString() + " /mph", 0.9f, 0.1f);
-            }
-        }
-    }
 }
