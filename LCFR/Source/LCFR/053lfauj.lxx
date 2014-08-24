@@ -806,43 +806,14 @@ namespace LCFR
 
         public bool WillFlyThroughWindscreen
         {
+            get
+            {
+                return ped.WillFlyThroughWindscreen;
+            }
             set
             {
                 ped.WillFlyThroughWindscreen = value;
             }
-        }
-
-        public bool WillUseCarsInCombat
-        {
-            set
-            {
-                ped.WillUseCarsInCombat = value;
-            }
-        }
-
-        public void ApplyForce(Vector3 direction)
-        {
-            ped.ApplyForce(direction);
-        }
-
-        public void ApplyForce(Vector3 direction, Vector3 rotation)
-        {
-            ped.ApplyForce(direction, rotation);
-        }
-
-        public void ApplyForceRelative(Vector3 direction)
-        {
-            ped.ApplyForceRelative(direction);
-        }
-
-        public void ApplyForceRelative(Vector3 direction, Vector3 rotation)
-        {
-            ped.ApplyForceRelative(direction, rotation);
-        }
-
-        public Blip AttachBlip()
-        {
-            return ped.AttachBlip();
         }
 
     }
