@@ -30,17 +30,15 @@ namespace LCFR
             engine.KeyDown -= keyDown;
         }
 
-        public void keyDown(object sender, GTA.KeyEventArgs e)
+        public void keyDown(object sender, KeyEventArgs e)
         {
             
         }
-
     }
 
-    public class SpeedOMeter : Script
+    public class PlayerVehicle : Script
     {
-
-        public SpeedOMeter()
+        public PlayerVehicle()
         {
             this.PerFrameDrawing += new GraphicsEventHandler(speedometer);
         }
@@ -50,7 +48,5 @@ namespace LCFR
             if (Player.Character.isInVehicle())
                 e.Graphics.DrawText(System.Math.Floor(Player.Character.CurrentVehicle.Speed * 2.2369).ToString() + " /mph", 0.9f, 0.1f);
         }
-
     }
-
 }

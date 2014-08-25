@@ -18,7 +18,6 @@ namespace LCFR
             //LCFREngine.Utils.drawString("Welcome to Liberty City First Responder!");
 
             Utils.drawTopLeftString("Welcome to Liberty City First Responder!\nVersion 0.1\n\nPress");
-            Utils.drawCenterBottomString("Debug message");
 
             // don't need to call anything here
             // we may call a messagebox or something here to display a welcome message or

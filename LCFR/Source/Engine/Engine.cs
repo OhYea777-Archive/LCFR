@@ -19,6 +19,7 @@ namespace Engine
 
         private WrappedPlayer wrappedPlayer;
 
+        // neverused (output log)
         private Duty duty;
         private KeyHandler keyHandler;
 
@@ -52,7 +53,6 @@ namespace Engine
         {
             BindKey(key, shift, ctrl, alt, e);
         }
-
     }
 
     /// <summary>
@@ -67,13 +67,6 @@ namespace Engine
             this.engine = engine;
 
             this.engine.bindKey(Keys.D, false, false, true, new KeyPressDelegate(dutyKey));
-            this.engine.bindKey(Keys.Delete, false, false, false, new KeyPressDelegate(delCarsKey));
-            this.engine.bindKey(Keys.H, true, true, true, new KeyPressDelegate(helpKey));
-        }
-
-        public void helpKey()
-        {
-            Utils.drawTopLeftString("help menu");
         }
 
         public void dutyKey()
@@ -83,15 +76,6 @@ namespace Engine
             else
                 engine.WrappedPlayer.Duty.endDuty();
         }
-
-        // use only for development
-        public void delCarsKey()
-        {
-            foreach (Vehicle veh in World.GetVehicles(Game.LocalPlayer.Character.Position, 175.0f))
-                if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
-                    veh.Delete();
-        }
-
     }
 
     /// <summary>

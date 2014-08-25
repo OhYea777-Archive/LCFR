@@ -558,7 +558,7 @@ namespace LCFR
             private set { }
         }
 
-        public bool isMissionCharacter
+      /*  public bool isMissionCharacter
         {
             get
             {
@@ -566,7 +566,7 @@ namespace LCFR
             }
 
             private set { }
-        }
+        } */
 
         public bool isOnFire
         {
