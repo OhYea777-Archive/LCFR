@@ -17,14 +17,14 @@ namespace Engine
     public class LCFREngine : Script
     {
 
-        private WrappedPlayer wrappedPlayer;
+        private LPlayer wrappedPlayer;
 
         private Duty duty;
         private KeyHandler keyHandler;
 
         public LCFREngine()
         {
-            this.wrappedPlayer = new WrappedPlayer(this, Player);
+            this.wrappedPlayer = new LPlayer(this, Player);
             this.keyHandler = new KeyHandler(this);
         }
 

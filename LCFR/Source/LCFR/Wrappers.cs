@@ -558,16 +558,6 @@ namespace LCFR
             private set { }
         }
 
-        public bool isMissionCharacter
-        {
-            get
-            {
-                return ped.isMissionCharacter;
-            }
-
-            private set { }
-        }
-
         public bool isOnFire
         {
             get
@@ -873,6 +863,46 @@ namespace LCFR
         public void Delete()
         {
             ped.Delete();
+        }
+
+        public void Detach()
+        {
+            ped.Detach();
+        }
+
+        public void Die()
+        {
+            ped.Die();
+        }
+
+        public void DropCurrentWeapon()
+        {
+            ped.DropCurrentWeapon();
+        }
+
+        public bool Equals(GTA.@base.HandleObject obj)
+        {
+            return ped.Equals(obj);
+        }
+
+        public bool Exists()
+        {
+            return ped.Exists();
+        }
+
+        public void FleeByVehicle(Vehicle vehicle)
+        {
+            ped.FleeByVehicle(vehicle);
+        }
+
+        public void ForceHelmet(bool enable)
+        {
+            ped.ForceHelmet(enable);
+        }
+
+        public void ForceRagdoll(int duration, bool tryToStayUpright)
+        {
+            ped.ForceRagdoll(duration, tryToStayUpright);
         }
 
     }
