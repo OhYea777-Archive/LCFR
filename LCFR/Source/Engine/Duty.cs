@@ -47,9 +47,9 @@ namespace Engine
 
         public void beginDuty()
         {
-            if (endDutyTime == -1 || TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime > DUTY_TIMEOUT)
+            if (endDutyTime == -1 || Utils.currentTimeInSeconds - endDutyTime > DUTY_TIMEOUT)
             {
-                this.currentModel = Game.LocalPlayer.Model;
+                this.currentModel = engine.WrappedPlayer.Model;
                 bIsOnDuty = true;
 
                 engine.WrappedPlayer.WantedLevel = 0;
@@ -74,13 +74,13 @@ namespace Engine
                 Utils.drawTopLeftString("on duty message");
             }
             else
-                Utils.drawTopLeftString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds - endDutyTime))) + "s");
+                Utils.drawTopLeftString("Time Left: " + (DUTY_TIMEOUT - (Convert.ToInt16(Utils.currentTimeInSeconds - endDutyTime))) + "s");
         }
 
         public void endDuty()
         {
             // in order to disable the "no police" you must disable that in the trainer
-            endDutyTime = TimeSpan.FromTicks(DateTime.Now.Ticks).TotalSeconds;
+            endDutyTime = Utils.currentTimeInSeconds;
 
             // delete all vehicles in area (police)
             foreach (Vehicle veh in spawnedVehicles)
@@ -108,7 +108,7 @@ namespace Engine
                     Vehicle veh = spawnedVehicles.ToArray()[index];
                     spawnedVehicles.RemoveAt(index);
 
-                    if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
+                    if (Game.Exists(veh) && veh != engine.WrappedPlayer.Character.CurrentVehicle)
                         veh.Delete();
                 }
             }

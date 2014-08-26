@@ -45,6 +45,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Source\Engine\AddonManager.cs" />
     <Compile Include="Source\Engine\Duty.cs" />
     <Compile Include="Source\Engine\Engine.cs" />
     <Compile Include="Source\LCFR\LCFRWrappers.cs" />

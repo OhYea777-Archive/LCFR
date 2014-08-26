@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Engine;
+
 using GTA;
 
 namespace LCFR
@@ -36,17 +37,26 @@ namespace LCFR
         }
     }
 
-    public class PlayerVehicle : Script
+    public class Speedometer : IAddon
     {
-        public PlayerVehicle()
+
+        private LCFREngine engine;
+
+        public void onInitialize(LCFREngine engine)
         {
-            this.PerFrameDrawing += new GraphicsEventHandler(speedometer);
+            this.engine = engine;
         }
 
-        public void speedometer(object sender, GraphicsEventArgs e)
+        public void onKeyDown(object sender, KeyEventArgs args) { }
+
+        public void onTick(object sender, EventArgs e) { }
+
+        public void onFrameDraw(object sender, GraphicsEventArgs e)
         {
-            if (Player.Character.isInVehicle())
-                e.Graphics.DrawText(System.Math.Floor(Player.Character.CurrentVehicle.Speed * 2.2369).ToString() + " /mph", 0.9f, 0.1f);
+            if (engine.WrappedPlayer.Character.isInVehicle())
+                e.Graphics.DrawText(System.Math.Floor(engine.WrappedPlayer.Character.CurrentVehicle.Speed * 2.2369).ToString() + " /mph", 0.9f, 0.1f);
         }
+
     }
+
 }
