@@ -21,6 +21,7 @@ namespace Engine
 
         public List<Vehicle> spawnedVehicles = new List<Vehicle>();
 
+        // vehicle coordinates
         Vector3 vehicle1 = new Vector3(1043.25f, -795.979f, 3.1011f);
         Vector3 vehicle2 = new Vector3(1045.76f, -795.526f, 3.06828f);
         Vector3 vehicle3 = new Vector3(1048.27f, -795.073f, 3.04196f);
@@ -30,9 +31,11 @@ namespace Engine
         Vector3 vehicle7 = new Vector3(1069.22f, -784.487f, 3.82037f);
         Vector3 vehicle8 = new Vector3(1077.84f, -768.706f, 5.00823f);
 
+        // player coordinates
         Vector3 onDutySpawn = new Vector3(1046.2f, -780.282f, 4.40463f);
         Vector3 offDutySpawn = new Vector3(921.073f, -577.344f, 14.1366f);
 
+        // current model of player
         public Model currentModel;
 
         public Duty(LCFREngine engine)
@@ -51,7 +54,7 @@ namespace Engine
 
                 engine.WrappedPlayer.WantedLevel = 0;
                 Game.WantedMultiplier = 0.0F;
-                engine.WrappedPlayer.Money += 10000;
+                engine.WrappedPlayer.Money += 25000;
                 Game.FadeScreenOut(5000, true);
                 Game.FadeScreenIn(10000);
                 engine.WrappedPlayer.Model = Model.BasicCopModel;
@@ -86,7 +89,7 @@ namespace Engine
 
             bIsOnDuty = false;
             Game.WantedMultiplier = 1.0F;
-            engine.WrappedPlayer.Money -= 10000;
+            engine.WrappedPlayer.Money -= 25000;
             Game.FadeScreenOut(5000, true);
             Game.FadeScreenIn(10000);
             engine.WrappedPlayer.Model = Model.FromString("PLAYER");
@@ -99,6 +102,7 @@ namespace Engine
         public void Tick(System.Object sender, EventArgs e)
         {
             if (bIsOnDuty && engine.WrappedPlayer.Character.isInVehicle())
+            {
                 for (int index = 0; index < spawnedVehicles.Count; index++)
                 {
                     Vehicle veh = spawnedVehicles.ToArray()[index];
@@ -107,8 +111,7 @@ namespace Engine
                     if (Game.Exists(veh) && veh != Game.LocalPlayer.Character.CurrentVehicle)
                         veh.Delete();
                 }
+            }
         }
-
     }
-
 }
