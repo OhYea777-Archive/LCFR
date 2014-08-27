@@ -14,12 +14,14 @@ using GTA.Native;
 namespace Engine
 {
 
+    /// <summary>
+    /// Main Engine class which loads all other classes/managers
+    /// </summary>
     public class LCFREngine : Script
     {
 
         private LPlayer wrappedPlayer;
 
-        // neverused (output log)
         private Duty duty;
         private KeyHandler keyHandler;
         private AddonManager addonManager;
@@ -32,46 +34,53 @@ namespace Engine
             this.addonManager = new AddonManager(this);
         }
 
-        public WrappedPlayer WrappedPlayer
+        /// <summary>
+        /// Variable to get the <see cref="WrappedPlayer"/> instance
+        /// </summary>
+        public readonly WrappedPlayer WrappedPlayer
         {
             get
             {
                 return wrappedPlayer;
             }
-
-            private set { }
         }
 
-        public Duty Duty
+        /// <summary>
+        /// Variable to get the <see cref="Duty"/> instance
+        /// </summary>
+        public readonly Duty Duty
         {
             get
             {
                 return duty;
             }
-
-            private set { }
         }
 
-        public KeyHandler KeyHandler
+        /// <summary>
+        /// Variable to get the <see cref="KeyHandler"/> instance
+        /// </summary>
+        public readonly KeyHandler KeyHandler
         {
             get
             {
                 return keyHandler;
             }
-
-            private set { }
         }
 
-        public AddonManager AddonManager
+        /// <summary>
+        /// Variable to get the <see cref="AddonManager"/> instance
+        /// </summary>
+        public readonly AddonManager AddonManager
         {
             get
             {
                 return addonManager;
             }
-
-            private set { }
         }
 
+        /// <summary>
+        /// Function to bind a key. Made so that it can be accessed outside of the <see cref="LCFREngine"/> class
+        /// </summary>
         public void bindKey(Keys key, bool shift, bool ctrl, bool alt, KeyPressDelegate e)
         {
             BindKey(key, shift, ctrl, alt, e);
