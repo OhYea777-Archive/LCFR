@@ -24,8 +24,8 @@ namespace LCFR
         {
             this.engine = engine;
             this.player = player;
-
-            this.duty = engine.Duty;
+            
+            this.duty = new Duty(engine);
         }
 
         public Player Player
@@ -987,11 +987,6 @@ namespace LCFR
             ped.NoLongerNeeded();
         }
 
-        public void RandomizeOutfit()
-        {
-            ped.RandomizeOutfit();
-        }
-
         public void RemoveFakeNetworkName()
         {
             ped.RemoveFakeNetworkName();
@@ -1030,137 +1025,6 @@ namespace LCFR
         public void WarpIntoVehicle(Vehicle vehicle, VehicleSeat seat)
         {
             ped.WarpIntoVehicle(vehicle, seat);
-        }
-
-    }
-
-    public class LVector3
-    {
-
-        public float x, y, z;
-
-        public LVector3(Vector3 vector)
-        {
-            this.x = vector.X;
-            this.y = vector.Y;
-            this.z = vector.Z;
-        }
-
-        public LVector3(float x, float y, float z)
-        {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-
-        public Vector3 toVector()
-        {
-            return new Vector3(x, y, z);
-        }
-
-        public LVector3 multiply(float amount)
-        {
-            return multiply(amount, amount, amount);
-        }
-
-        public LVector3 multiply(Vector3 vector)
-        {
-            return multiply(vector.X, vector.Y, vector.Z);
-        }
-
-        public LVector3 multiply(LVector3 vector)
-        {
-            return multiply(vector.toVector());
-        }
-
-        public LVector3 multiply(float x, float y, float z)
-        {
-            this.x *= x;
-            this.y *= y;
-            this.z *= z;
-
-            return this;
-        }
-
-        public LVector3 divide(float amount)
-        {
-            return divide(amount, amount, amount);
-        }
-
-        public LVector3 divide(Vector3 vector)
-        {
-            return divide(vector.X, vector.Y, vector.Z);
-        }
-
-        public LVector3 divide(LVector3 vector)
-        {
-            return divide(vector.toVector());
-        }
-
-        public LVector3 divide(float x, float y, float z)
-        {
-            this.x /= x;
-            this.y /= y;
-            this.z /= z;
-
-            return this;
-        }
-
-        public LVector3 add(float amount)
-        {
-            return add(amount, amount, amount);
-        }
-
-        public LVector3 add(Vector3 vector)
-        {
-            return add(vector.X, vector.Y, vector.Z);
-        }
-
-        public LVector3 add(LVector3 vector)
-        {
-            return add(vector.toVector());
-        }
-
-        public LVector3 add(float x, float y, float z)
-        {
-            this.x += x;
-            this.y += y;
-            this.z += z;
-
-            return this;
-        }
-
-        public LVector3 subtract(float amount)
-        {
-            return subtract(amount, amount, amount);
-        }
-
-        public LVector3 subtract(Vector3 vector)
-        {
-            return subtract(vector.X, vector.Y, vector.Z);
-        }
-
-        public LVector3 subtract(LVector3 vector)
-        {
-            return subtract(vector.toVector());
-        }
-
-        public LVector3 subtract(float x, float y, float z)
-        {
-            this.x -= x;
-            this.y -= y;
-            this.z -= z;
-
-            return this;
-        }
-
-        public LVector3 zero()
-        {
-            this.x = 0;
-            this.y = 0;
-            this.z = 0;
-
-            return this;
         }
 
     }

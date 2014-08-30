@@ -34,6 +34,7 @@ namespace Engine
         /// </summary>
         public void loadDefaults()
         {
+            registerAndInit(new Pullover());
             registerAndInit(new Speedometer());
         }
 

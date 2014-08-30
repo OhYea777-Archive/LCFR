@@ -12,25 +12,43 @@ using GTA;
 namespace LCFR
 {
 
-    public class Pullover : IAddon
+    public class Pullover
     {
 
         private const float DISTANCE = 10f;
 
         private LCFREngine engine;
 
-        public void onInitialize(LCFREngine engine)
+        private AnimationSet set;
+
+        public Pullover(LCFREngine engine)
         {
             this.engine = engine;
         }
 
-        public void onKeyDown(object sender, GTA.KeyEventArgs e)
+        public void register()
+        {
+            engine.KeyDown += keyDown;
+        }
+
+        public void deRegister()
+        {
+            engine.KeyDown -= keyDown;
+        }
+
+        public void keyDown(object sender, GTA.KeyEventArgs e)
         {
 
             if (e.Key == Keys.LShiftKey && engine.WrappedPlayer.Character.isInVehicle())
             {
-                Vector3 pos = new LVector3(engine.WrappedPlayer.Character.Position).add(new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).x, new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).y, new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).z).toVector();
-                
+                Vector3 position = engine.WrappedPlayer.Character.Position;
+                Vector3 dir = engine.WrappedPlayer.Character.CurrentVehicle.Direction;
+
+                Vector3 pos = position;
+
+                pos.X += dir.X * DISTANCE;
+                pos.Y += dir.Y * DISTANCE;
+
 	            Vehicle vehicle = World.GetClosestVehicle(pos, DISTANCE);
 
                 if (vehicle != null && vehicle != engine.WrappedPlayer.Character.CurrentVehicle)
@@ -40,15 +58,18 @@ namespace LCFR
                 else
                 {
                     Utils.drawCenterBottomString("No Vehicle!");
-
-                    GTA.
                 }
             }
+            else if (e.Key == Keys.LShiftKey)
+            {
+                AnimationSet set = new AnimationSet("arrest");
+                engine.WrappedPlayer.Character.Animation.Play(set, "cop_std_arrest", 3f);
+            }
+            else if (e.Key == Keys.LControlKey)
+            {
+                
+            }
         }
-
-        public void onTick(object sender, EventArgs e) { }
-
-        public void onFrameDraw(object sender, GraphicsEventArgs e) { }
 
     }
 

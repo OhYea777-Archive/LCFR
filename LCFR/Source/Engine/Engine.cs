@@ -28,8 +28,8 @@ namespace Engine
 
         public LCFREngine()
         {
-            this.wrappedPlayer = new LPlayer(this, Player);
             this.duty = new Duty(this);
+            this.wrappedPlayer = new LPlayer(this, Player);
             this.keyHandler = new KeyHandler(this);
             this.addonManager = new AddonManager(this);
         }
@@ -37,45 +37,53 @@ namespace Engine
         /// <summary>
         /// Variable to get the <see cref="WrappedPlayer"/> instance
         /// </summary>
-        public readonly WrappedPlayer WrappedPlayer
+        public WrappedPlayer WrappedPlayer
         {
             get
             {
                 return wrappedPlayer;
             }
+
+            private set { }
         }
 
         /// <summary>
         /// Variable to get the <see cref="Duty"/> instance
         /// </summary>
-        public readonly Duty Duty
+        public Duty Duty
         {
             get
             {
                 return duty;
             }
+
+            private set { }
         }
 
         /// <summary>
         /// Variable to get the <see cref="KeyHandler"/> instance
         /// </summary>
-        public readonly KeyHandler KeyHandler
+        public KeyHandler KeyHandler
         {
             get
             {
                 return keyHandler;
             }
+
+            private set { }
         }
 
         /// <summary>
         /// Variable to get the <see cref="AddonManager"/> instance
         /// </summary>
-        public readonly AddonManager AddonManager
+        public AddonManager AddonManager
         {
             get
             {
                 return addonManager;
             }
+
+            private set { }
         }
 
         /// <summary>

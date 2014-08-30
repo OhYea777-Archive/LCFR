@@ -27,7 +27,7 @@ namespace LCFR
     public class LPed : WrappedPed
     {
 
-        public LPed(Ped ped) : base(ped) { }
+        public LPed(LCFREngine engine, Ped ped) : base(engine, ped) { }
 
     }
 
