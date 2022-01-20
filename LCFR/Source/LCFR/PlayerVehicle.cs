@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using AdvancedHookManaged;
+
 using Engine;
 
 using GTA;
@@ -26,22 +28,21 @@ namespace LCFR
 
         public void onKeyDown(object sender, GTA.KeyEventArgs e)
         {
-
-            if (e.Key == Keys.LShiftKey && engine.WrappedPlayer.Character.isInVehicle())
+            if (engine.Duty.bIsOnDuty && e.Key == Keys.LShiftKey && engine.WrappedPlayer.Character.isInVehicle())
             {
                 Vector3 pos = new LVector3(engine.WrappedPlayer.Character.Position).add(new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).x, new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).y, new LVector3(engine.WrappedPlayer.Character.CurrentVehicle.Direction).multiply(DISTANCE).z).toVector();
-                
-	            Vehicle vehicle = World.GetClosestVehicle(pos, DISTANCE);
+
+                Vehicle vehicle = World.GetClosestVehicle(pos, DISTANCE);
 
                 if (vehicle != null && vehicle != engine.WrappedPlayer.Character.CurrentVehicle)
                 {
-                    vehicle.Delete();
+                    AGame.PrintText("Pulling over suspect!");
+
+                    GTA.Native.Function.Call("FORCE_PED_TO_FLEE_WHILST_DRIVING_VEHICLE", vehicle.GetPedOnSeat(VehicleSeat.Driver), vehicle);
                 }
                 else
                 {
                     Utils.drawCenterBottomString("No Vehicle!");
-
-                    GTA.
                 }
             }
         }
